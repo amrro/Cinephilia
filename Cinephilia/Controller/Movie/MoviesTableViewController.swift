@@ -14,10 +14,7 @@ class MoviesTableViewController: UITableViewController {
     private let api = MoviesAPI()
     
     private var fetchedMovies = [Movie]() {
-        didSet {
-            currentDataSource = fetchedMovies
-            tableView.reloadData()
-        }
+        didSet { currentDataSource = fetchedMovies }
     }
     
     private var currentDataSource = [Movie]() {
@@ -26,7 +23,8 @@ class MoviesTableViewController: UITableViewController {
     
     private var sorting: Sorting = .popular {
         didSet {
-            tableView.refreshControl?.beginRefreshing()
+            loadMovies()
+            navigationController?.navigationBar.topItem?.title = sorting.rawValue
         }
     }
     
@@ -58,6 +56,24 @@ class MoviesTableViewController: UITableViewController {
         loadMovies()
     }
     
+    @IBAction func sortMovies(_ sender: Any) {
+        let sortingActionSheet = UIAlertController(
+            title: "Select Sorting Type",
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        sortingActionSheet.addAction(UIAlertAction(title: "Popular", style: .default) { action in self.updateSorting(with: .popular) })
+        sortingActionSheet.addAction(UIAlertAction(title: "Top Rated", style: .default) { action in self.updateSorting(with: .topRated) })
+        sortingActionSheet.addAction(UIAlertAction(title: "Upcoming", style: .default) { action in self.updateSorting(with: .coming) })
+        sortingActionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        self.present(sortingActionSheet, animated: true, completion: nil)
+
+    }
+    
+
+    
     private func setupRefreshConroller() {
         if  tableView.refreshControl == nil {
             tableView.refreshControl = UIRefreshControl()
@@ -66,8 +82,13 @@ class MoviesTableViewController: UITableViewController {
         tableView.refreshControl?.addTarget(self, action: #selector(loadMovies), for: .valueChanged)
     }
     
+    private func setupNavBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
     @objc
     private func loadMovies() {
+        self.tableView.refreshControl?.beginRefreshing()
         api.movies(sorting: sorting)
             .done({ listing in
                 self.fetchedMovies = listing.results
@@ -78,9 +99,11 @@ class MoviesTableViewController: UITableViewController {
         }
     }
     
-    
-    private func setupNavBar() {
-        navigationController?.navigationBar.prefersLargeTitles = true
+    private func updateSorting(with sorting: Sorting) {
+        // 01. if the current sorting == the new one >> do nothing.
+        guard self.sorting != sorting else { return }
+        
+        self.sorting = sorting
     }
     
     // MARK: - Table view data source

@@ -32,7 +32,7 @@ class MoviesAPI {
         case .topRated:
             return self.topRatedMovies()
         case .coming:
-            return self.popularMovies()
+            return self.upcomingMovies()
         }
     }
     
@@ -42,6 +42,10 @@ class MoviesAPI {
     
     func topRatedMovies() -> Promise<Listing<Movie>> {
         return MoviesAPI.request(with: MovieEndpoints.topRated.url, type: Listing<Movie>.self)
+    }
+    
+    func upcomingMovies() -> Promise<Listing<Movie>> {
+        return MoviesAPI.request(with: MovieEndpoints.upcoming.url, type: Listing<Movie>.self)
     }
     
     func similarMovies(with id: Int) -> Promise<Listing<Movie>> {

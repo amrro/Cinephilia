@@ -19,8 +19,9 @@ fileprivate func buildURL(including path: String) -> String {
 enum MovieEndpoints {
 
     
-case popular
+    case popular
     case topRated
+    case upcoming
     case posterImage(path: String)
     case movie(id: Int)
     case similar(id: Int)
@@ -31,14 +32,16 @@ case popular
     
     var stringValue: String {
         switch self {
+        case .popular:
+            return BASE_URL + "/movie/popular" + API_KEY_PARM
+        case .topRated:
+            return BASE_URL + "/movie/top_rated" + API_KEY_PARM
+        case .upcoming:
+            return BASE_URL + "/movie/upcoming" + API_KEY_PARM
         case .movie (let id):
             return BASE_URL + "/movie/\(id)" + API_KEY_PARM
         case .similar (let id):
             return BASE_URL + "/movie/\(id)/similar" + API_KEY_PARM
-        case .popular: 
-            return BASE_URL + "/movie/popular" + API_KEY_PARM
-        case .topRated:
-            return BASE_URL + "/movie/top_rated" + API_KEY_PARM
         case .posterImage(let path):
             return "https://image.tmdb.org/t/p/w500/" + path
         case .movieGenres:
