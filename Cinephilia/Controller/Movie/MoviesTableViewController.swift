@@ -24,6 +24,12 @@ class MoviesTableViewController: UITableViewController {
         didSet { tableView.reloadData() }
     }
     
+    private var sorting: Sorting = .popular {
+        didSet {
+            tableView.refreshControl?.beginRefreshing()
+        }
+    }
+    
     let searchController = UISearchController(searchResultsController: nil)
     
     private var selectedMovieIndex = 0 {
@@ -36,17 +42,7 @@ class MoviesTableViewController: UITableViewController {
         super.viewDidLoad()
         setupNavBar()
         
-        tableView.refreshControl = UIRefreshControl()
-        
-        
-        api.movies(sorting: .popular)
-            .done({ listing in
-                self.fetchedMovies = listing.results
-            })
-            .catch { (error) in
-                print(error)
-        }
-        
+        setupRefreshConroller()
         
         // Setup the Search Controller
         searchController.obscuresBackgroundDuringPresentation = false
@@ -54,6 +50,32 @@ class MoviesTableViewController: UITableViewController {
         searchController.searchBar.placeholder = "Search Movies"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        refreshControl?.beginRefreshing()
+        loadMovies()
+    }
+    
+    private func setupRefreshConroller() {
+        if  tableView.refreshControl == nil {
+            tableView.refreshControl = UIRefreshControl()
+        }
+        
+        tableView.refreshControl?.addTarget(self, action: #selector(loadMovies), for: .valueChanged)
+    }
+    
+    @objc
+    private func loadMovies() {
+        api.movies(sorting: sorting)
+            .done({ listing in
+                self.fetchedMovies = listing.results
+                self.tableView.refreshControl?.endRefreshing()
+            })
+            .catch { (error) in
+                print(error)
+        }
     }
     
     
