@@ -8,9 +8,6 @@
 
 import Foundation
 
-// MARK: - TMDBListing
-//   let listing = try? newJSONDecoder().decode(TMDBListing.self, from: jsonData)
-
 
 // MARK: - Movie
 struct Movie: Codable {
@@ -41,7 +38,6 @@ struct Movie: Codable {
         case backdropPath = "backdrop_path"
         case originalLanguage = "original_language"
         case originalTitle = "original_title"
-//        case genreIDS = "genre_ids"
         case genres
         case revenue, runtime
         case title
@@ -50,28 +46,3 @@ struct Movie: Codable {
         case releaseDate = "release_date"
     }
 }
-
-enum OriginalLanguage: String, Codable, CustomStringConvertible {
-    var description: String {
-        switch self {case .english:
-            return "English"
-        case .korean:
-            return "Korean"
-        case .tl:
-            return "Tagalog"
-        case .ja:
-            return "Japanese"
-        @unknown default:
-            return ""
-        }
-        
-    }
-    
-    case english = "en"
-    case korean = "ko"
-    case tl = "tl"
-    case ja = "ja"
-}
-
-
-

@@ -12,7 +12,7 @@ import Kingfisher
 class MovieDetailViewController: UIViewController {
     
     var movie: Movie?
-    private let api = TMDBApi()
+    private let api = MoviesAPI()
     
     @IBOutlet weak var movieReleaseDate: UILabel!
     @IBOutlet weak var backdropImageView: UIImageView!

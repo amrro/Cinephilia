@@ -8,9 +8,9 @@
 
 import UIKit
 
-class TVShowsTableViewController: UITableViewController {
+class ShowsTableViewController: UITableViewController {
     
-    private let api = TMDBApi()
+    private let api = ShowsAPI()
     private var fetchedShows = [Show]() {
         didSet {
             tableView.reloadData()

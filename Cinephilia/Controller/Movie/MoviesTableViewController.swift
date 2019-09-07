@@ -7,11 +7,11 @@
 //
 
 import UIKit
+import CoreData
 
-class HomeViewController: UITableViewController {
+class MoviesTableViewController: UITableViewController {
     
-    
-    private let api = TMDBApi()
+    private let api = MoviesAPI()
     
     private var fetchedMovies = [Movie]() {
         didSet {
@@ -25,13 +25,13 @@ class HomeViewController: UITableViewController {
     }
     
     let searchController = UISearchController(searchResultsController: nil)
-
+    
     private var selectedMovieIndex = 0 {
         didSet {
             performSegue(withIdentifier: "showMovieDetail", sender: nil)
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
@@ -39,7 +39,7 @@ class HomeViewController: UITableViewController {
         tableView.refreshControl = UIRefreshControl()
         
         
-        api.popularMovies()
+        api.movies(sorting: .popular)
             .done({ listing in
                 self.fetchedMovies = listing.results
             })
@@ -60,16 +60,16 @@ class HomeViewController: UITableViewController {
     private func setupNavBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
-
+    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return currentDataSource.count
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath)
@@ -84,10 +84,9 @@ class HomeViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         selectedMovieIndex = indexPath.row
     }
-
-
-    // MARK: - Navigation
-
+    
+    
+    // MARK: - Navigations
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showMovieDetail" {
@@ -96,12 +95,12 @@ class HomeViewController: UITableViewController {
             }
         }
     }
-
-
+    
+    
 }
 
 
-extension HomeViewController:  UISearchBarDelegate {
+extension MoviesTableViewController:  UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let query = searchBar.text, !query.isEmpty {

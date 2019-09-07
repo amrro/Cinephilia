@@ -23,7 +23,7 @@ class ShowDetailsViewController: UIViewController {
     
     
     var show: Show?
-    let api = TMDBApi()
+    let api = ShowsAPI()
     var similarShowDataSource = [Show]() {
         didSet {
             similarCollectionView.reloadData()
