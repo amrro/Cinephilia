@@ -58,11 +58,6 @@ class MoviesAPI {
     }
     
     
-    func tvGenres() -> Promise<GenreList> {
-        return MoviesAPI.request(with: MovieEndpoints.tvGenres.url, type: GenreList.self)
-    }
-    
-    
     func search(query: String) -> Promise<Listing<Movie>> {
         return MoviesAPI.request(with: MovieEndpoints.search(query: query).url, type: Listing<Movie>.self)
     }

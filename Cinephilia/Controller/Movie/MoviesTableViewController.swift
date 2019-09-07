@@ -57,19 +57,18 @@ class MoviesTableViewController: UITableViewController {
     }
     
     @IBAction func sortMovies(_ sender: Any) {
-        let sortingActionSheet = UIAlertController(
-            title: "Select Sorting Type",
-            message: nil,
-            preferredStyle: .actionSheet
-        )
+        let sortingActionSheet = UIAlertController(title: "Select Sorting Type", message: nil, preferredStyle: .actionSheet)
         
-        sortingActionSheet.addAction(UIAlertAction(title: "Popular", style: .default) { action in self.updateSorting(with: .popular) })
-        sortingActionSheet.addAction(UIAlertAction(title: "Top Rated", style: .default) { action in self.updateSorting(with: .topRated) })
-        sortingActionSheet.addAction(UIAlertAction(title: "Upcoming", style: .default) { action in self.updateSorting(with: .coming) })
+        for sortingItem in Sorting.values {
+            sortingActionSheet.addAction(
+                UIAlertAction(title: sortingItem.rawValue, style: .default, handler: { (alerAction) in
+                    self.sorting = sortingItem
+                })
+            )
+        }
+
         sortingActionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
         self.present(sortingActionSheet, animated: true, completion: nil)
-
     }
     
 
