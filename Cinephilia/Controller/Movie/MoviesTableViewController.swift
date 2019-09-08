@@ -7,12 +7,13 @@
 //
 
 import UIKit
-import CoreData
+import Combine
 
 class MoviesTableViewController: UITableViewController {
     
     private let api = MoviesAPI()
-    
+    let searchController = UISearchController(searchResultsController: nil)
+
     private var fetchedMovies = [Movie]() {
         didSet { currentDataSource = fetchedMovies }
     }
@@ -21,38 +22,33 @@ class MoviesTableViewController: UITableViewController {
         didSet { tableView.reloadData() }
     }
     
-    private var sorting: Sorting = .popular {
-        didSet {
-            loadMovies()
-            navigationController?.navigationBar.topItem?.title = sorting.rawValue
-        }
-    }
-    
-    let searchController = UISearchController(searchResultsController: nil)
-    
-    private var selectedMovieIndex = 0 {
-        didSet {
-            performSegue(withIdentifier: "showMovieDetail", sender: nil)
-        }
-    }
-    
+    @Published private var sorting: Sorting = .popular
+    @Published private var selectedMovieIndex: Int! = nil
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        
         setupRefreshConroller()
+        setupSearchController()
         
-        // Setup the Search Controller
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "Search Movies"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
+        let _ = $sorting
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .print()
+            .sink { sorting in
+                self.loadMovies()
+                self.navigationController?.navigationBar.topItem?.title = sorting.rawValue
+        }
+        
+        let _ = $selectedMovieIndex.filter{ $0 != nil }
+            .receive(on: DispatchQueue.main)
+            .print()
+            .sink { _ in self.performSegue(withIdentifier: "showMovieDetail", sender: nil) }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        refreshControl?.beginRefreshing()
         sorting = .popular
     }
     
@@ -62,9 +58,7 @@ class MoviesTableViewController: UITableViewController {
         for sortingItem in Sorting.values {
             sortingActionSheet.addAction(
                 UIAlertAction(title: sortingItem.rawValue, style: .default, handler: { [weak self] (alerAction) in
-                    if sortingItem != self?.sorting {
-                        self?.sorting = sortingItem
-                    }
+                    self?.sorting = sortingItem
                 })
             )
         }
@@ -83,6 +77,16 @@ class MoviesTableViewController: UITableViewController {
         tableView.refreshControl?.addTarget(self, action: #selector(loadMovies), for: .valueChanged)
     }
     
+    fileprivate func setupSearchController() {
+        // Setup the Search Controller
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search Movies"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+    
+    
     private func setupNavBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -90,21 +94,19 @@ class MoviesTableViewController: UITableViewController {
     @objc
     private func loadMovies() {
         self.tableView.refreshControl?.beginRefreshing()
-        api.movies(sorting: sorting)
-            .done({ listing in
-                self.fetchedMovies = listing.results
-                self.tableView.refreshControl?.endRefreshing()
-            })
-            .catch { (error) in
-                print(error)
-        }
-    }
-    
-    private func updateSorting(with newSorting: Sorting) {
-        // 01. if the current sorting == the new one >> do nothing.
-        guard self.sorting != newSorting else { return }
         
-        self.sorting = newSorting
+        let _ = api.movies(sorting: sorting)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { (completion) in
+                self.tableView.refreshControl?.endRefreshing()
+                
+                switch completion {
+                case .failure(let error):
+                    print(error)
+                case .finished:
+                    break;
+                }
+            }) { self.fetchedMovies = $0.results }
     }
     
     // MARK: - Table view data source
@@ -150,15 +152,20 @@ extension MoviesTableViewController:  UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let query = searchBar.text, !query.isEmpty {
-            self.api.search(query: query)
-                .get { (listing: Listing<Movie>) in
+            let _ = self.api.search(query: query)
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { (comletion) in
+                    switch comletion {
+                    case .finished:
+                        break;
+                    case .failure(let error):
+                        print(error)
+                    }
+                }) { listing in
                     self.currentDataSource = listing.results
                     self.tableView.reloadData()
-                }.catch { (error) in
-                    print(error)
             }
         }
-        
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

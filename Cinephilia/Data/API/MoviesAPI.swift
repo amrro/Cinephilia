@@ -8,24 +8,28 @@
 
 import Foundation
 import os.log
-import PromiseKit
+import Combine
 
 class MoviesAPI {
     
-    class func request<T: Decodable>(with url: URL, type: T.Type) -> Promise<T> {
-        return firstly {
-            URLSession.shared.dataTask(.promise, with: url)
-            }.map{
-                return try JSONDecoder().decode(type.self, from: $0.data)
-        }
+    class func request<T: Decodable>(with url: URL, type: T.Type) -> AnyPublisher<T, Error> {
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .print()
+            .tryMap { output in
+                guard let response = output.response as? HTTPURLResponse, response.statusCode == 200 else {
+                    throw HTTPError.statusCode
+                }
+                return output.data
+        } .decode(type: type.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
     }
     
-    func movie(with id: Int) -> Promise<Movie> {
+    func movie(with id: Int) -> AnyPublisher<Movie, Error> {
         return MoviesAPI.request(with: MovieEndpoints.movie(id: id).url, type: Movie.self)
     }
     
     
-    func movies(sorting: Sorting) -> Promise<Listing<Movie>> {
+    func movies(sorting: Sorting) -> AnyPublisher<Listing<Movie>, Error> {
         switch sorting {
         case .popular:
             return self.popularMovies()
@@ -36,37 +40,36 @@ class MoviesAPI {
         }
     }
     
-    func popularMovies() -> Promise<Listing<Movie>> {
+    func popularMovies() -> AnyPublisher<Listing<Movie>, Error> {
         return MoviesAPI.request(with: MovieEndpoints.popular.url, type: Listing<Movie>.self)
     }
     
-    func topRatedMovies() -> Promise<Listing<Movie>> {
+    func topRatedMovies() -> AnyPublisher<Listing<Movie>, Error> {
         return MoviesAPI.request(with: MovieEndpoints.topRated.url, type: Listing<Movie>.self)
     }
     
-    func upcomingMovies() -> Promise<Listing<Movie>> {
+    func upcomingMovies() -> AnyPublisher<Listing<Movie>, Error> {
         return MoviesAPI.request(with: MovieEndpoints.upcoming.url, type: Listing<Movie>.self)
     }
     
-    func similarMovies(with id: Int) -> Promise<Listing<Movie>> {
+    func similarMovies(with id: Int) -> AnyPublisher<Listing<Movie>, Error> {
         return MoviesAPI.request(with: MovieEndpoints.similar(id: id).url, type: Listing<Movie>.self)
     }
     
     
-    func movieGenres() -> Promise<GenreList> {
+    func movieGenres() -> AnyPublisher<GenreList, Error> {
         return MoviesAPI.request(with: MovieEndpoints.movieGenres.url, type: GenreList.self)
     }
     
     
-    func search(query: String) -> Promise<Listing<Movie>> {
+    func search(query: String) -> AnyPublisher<Listing<Movie>, Error> {
         return MoviesAPI.request(with: MovieEndpoints.search(query: query).url, type: Listing<Movie>.self)
     }
     
-
     
     
-    enum HTTPError: Error {
-        case NetworkError(url: URL, statusCode: Int)
-        case URLError(_ url: String)
+    
+    enum HTTPError: LocalizedError {
+        case statusCode
     }
 }

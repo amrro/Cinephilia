@@ -38,18 +38,32 @@ class MovieDetailViewController: UIViewController {
     }
     
     private func reloadMovie() {
-        guard let movie = movie else { return }
-        api.movie(with: movie.id)
-            .get(updateUI)
-            .catch( { (error) in
-                print(error)
-            })
+        guard movie != nil else { return }
         
-        api.similarMovies(with: movie.id)
-            .get(updateCollectionView)
-            .catch( { (error) in
-                print(error)
-            })
+        let _ = api.movie(with: movie!.id)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                    case .finished:
+                    break;
+                case .failure(let error):
+                    print(error)
+                }
+            }) { self.updateUI(using: $0) }
+        
+        
+        let _ = api.similarMovies(with: movie!.id)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break;
+                case .failure(let error):
+                    print(error)
+                }
+            }) {
+                self.updateCollectionView(listing: $0)
+        }
     }
     
     

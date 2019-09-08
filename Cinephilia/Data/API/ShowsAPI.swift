@@ -7,13 +7,13 @@
 //
 
 import Foundation
-import PromiseKit
+import Combine
 
 
 class ShowsAPI {
     // MARK: - TV shows
     
-    func shows(with sorting: Sorting) -> Promise<Listing<Show>> {
+    func shows(with sorting: Sorting) -> AnyPublisher<Listing<Show>, Error> {
         switch sorting {
         case .popular:
             return self.popularShows()
@@ -24,29 +24,29 @@ class ShowsAPI {
         }
     }
     
-    func popularShows() -> Promise<Listing<Show>> {
+    func popularShows() -> AnyPublisher<Listing<Show>, Error> {
         return MoviesAPI.request(with: ShowsEndpoints.popular.url, type: Listing<Show>.self)
     }
     
-    func topRatedShows() -> Promise<Listing<Show>> {
+    func topRatedShows() -> AnyPublisher<Listing<Show>, Error> {
         return MoviesAPI.request(with: ShowsEndpoints.topRated.url, type: Listing<Show>.self)
     }
     
-    func upcomingShows() -> Promise<Listing<Show>> {
+    func upcomingShows() -> AnyPublisher<Listing<Show>, Error> {
         return MoviesAPI.request(with: ShowsEndpoints.upcoming.url, type: Listing<Show>.self)
     }
     
     
-    func show(with id: Int) -> Promise<Show> {
+    func show(with id: Int) -> AnyPublisher<Show, Error> {
         return MoviesAPI.request(with: ShowsEndpoints.show(id: id).url, type: Show.self)
     }
     
     
-    func similarShows(with id: Int) -> Promise<Listing<Show>> {
+    func similarShows(with id: Int) -> AnyPublisher<Listing<Show>, Error> {
         return MoviesAPI.request(with: ShowsEndpoints.similar(id: id).url, type: Listing<Show>.self)
     }
     
-    func tvGenres() -> Promise<GenreList> {
+    func tvGenres() -> AnyPublisher<GenreList, Error> {
         return MoviesAPI.request(with: MovieEndpoints.tvGenres.url, type: GenreList.self)
     }
     

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 class ShowsTableViewController: UITableViewController {
     
@@ -14,24 +15,25 @@ class ShowsTableViewController: UITableViewController {
     private var fetchedShows = [Show]() {
         didSet { tableView.reloadData() }
     }
-    
-    private var selecedIndex: Int = 0 {
-        didSet {
-            performSegue(withIdentifier: "showDetails", sender: nil)
-        }
-    }
-    
-    private var sorting: Sorting = .popular {
-        didSet {
-            loadShows()
-            navigationController?.navigationBar.topItem?.title = sorting.rawValue
-        }
-    }
+
+    @Published private var sorting: Sorting = .popular
+    @Published private var selecedIndex: Int! = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let _ = $selecedIndex.filter{ $0 != nil }
+            .receive(on: DispatchQueue.main)
+            .print()
+            .sink { _ in self.performSegue(withIdentifier: "showDetails", sender: nil) }
+        
+        let _ = $sorting.receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .sink {
+                self.loadShows()
+                self.navigationController?.navigationBar.topItem?.title = $0.rawValue
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -58,13 +60,18 @@ class ShowsTableViewController: UITableViewController {
     
     
     private func loadShows() {
-        api.shows(with: sorting)
-            .done { (listing: Listing<Show>) in
-                self.fetchedShows = listing.results
-            }.catch { (error) in
-                print(error)
-        }
+        let _ = api.shows(with: sorting)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                    case .finished:
+                    break;
+                case .failure(let error):
+                    print(error)
+                }
+            }) { self.fetchedShows = $0.results }
     }
+
 
     // MARK: - Table view data source
 
