@@ -132,7 +132,13 @@
                             <outlet property="delegate" destination="JEV-nr-tcW" id="F2Q-Jf-upe"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="nlZ-4A-6zq"/>
+                    <navigationItem key="navigationItem" id="nlZ-4A-6zq">
+                        <barButtonItem key="rightBarButtonItem" title="Sort" image="sorting-icon" id="Ilp-VM-Ow3">
+                            <connections>
+                                <action selector="updateSorting:" destination="JEV-nr-tcW" id="hnR-9b-MmT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="9q5-NJ-iAk" kind="show" identifier="showDetails" id="u99-u1-KXM"/>
                     </connections>
@@ -331,6 +337,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="sorting-icon" width="30" height="30"/>
         <image name="tv-icon" width="30" height="30"/>
     </resources>
 </document>

@@ -7,7 +7,7 @@
 //
 
 enum Sorting: String {
-    case popular = "popular"
+    case popular = "Popular"
     case topRated = "Top Rated"
     case coming = "Upcoming"
     

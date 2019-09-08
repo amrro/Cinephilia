@@ -53,7 +53,7 @@ class MoviesTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         refreshControl?.beginRefreshing()
-        loadMovies()
+        sorting = .popular
     }
     
     @IBAction func sortMovies(_ sender: Any) {
@@ -61,8 +61,10 @@ class MoviesTableViewController: UITableViewController {
         
         for sortingItem in Sorting.values {
             sortingActionSheet.addAction(
-                UIAlertAction(title: sortingItem.rawValue, style: .default, handler: { (alerAction) in
-                    self.sorting = sortingItem
+                UIAlertAction(title: sortingItem.rawValue, style: .default, handler: { [weak self] (alerAction) in
+                    if sortingItem != self?.sorting {
+                        self?.sorting = sortingItem
+                    }
                 })
             )
         }
@@ -98,11 +100,11 @@ class MoviesTableViewController: UITableViewController {
         }
     }
     
-    private func updateSorting(with sorting: Sorting) {
+    private func updateSorting(with newSorting: Sorting) {
         // 01. if the current sorting == the new one >> do nothing.
-        guard self.sorting != sorting else { return }
+        guard self.sorting != newSorting else { return }
         
-        self.sorting = sorting
+        self.sorting = newSorting
     }
     
     // MARK: - Table view data source

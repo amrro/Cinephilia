@@ -63,6 +63,8 @@ enum MovieEndpoints {
 enum ShowsEndpoints {
     
     case popular
+    case topRated
+    case upcoming
     case posterPath(path: String)
     case show(id: Int)
     case similar(id: Int)
@@ -71,10 +73,14 @@ enum ShowsEndpoints {
     
     var stringValue: String {
         switch self {
-        case .posterPath(let path):
-            return "https://image.tmdb.org/t/p/w500" + path
         case .popular:
             return buildURL(including: "/tv/popular")
+        case .topRated:
+            return buildURL(including: "/tv/top_rated")
+        case .upcoming:
+            return buildURL(including: "/tv/upcoming")
+        case .posterPath(let path):
+            return "https://image.tmdb.org/t/p/w500" + path
         case .show(let id):
             return buildURL(including: "/tv/\(id)")
         case .similar(let id):

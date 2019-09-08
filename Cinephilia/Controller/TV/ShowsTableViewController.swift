@@ -12,9 +12,7 @@ class ShowsTableViewController: UITableViewController {
     
     private let api = ShowsAPI()
     private var fetchedShows = [Show]() {
-        didSet {
-            tableView.reloadData()
-        }
+        didSet { tableView.reloadData() }
     }
     
     private var selecedIndex: Int = 0 {
@@ -22,15 +20,45 @@ class ShowsTableViewController: UITableViewController {
             performSegue(withIdentifier: "showDetails", sender: nil)
         }
     }
-
+    
+    private var sorting: Sorting = .popular {
+        didSet {
+            loadShows()
+            navigationController?.navigationBar.topItem?.title = sorting.rawValue
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadShows()
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        sorting = .popular
     }
     
+    @IBAction func updateSorting(_ sender: Any) {
+        let sortingActionSheet = UIAlertController(title: "Select Sorting Type.", message: nil, preferredStyle: .actionSheet)
+        
+        for sortingItem in Sorting.values {
+            sortingActionSheet.addAction(
+                UIAlertAction(title: sortingItem.rawValue, style: .default, handler: { [weak self] (UIAlertAction) in
+                    if sortingItem != self?.sorting {
+                        self?.sorting = sortingItem
+                    }
+                }))
+        }
+        
+        sortingActionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(sortingActionSheet, animated: true, completion: nil)
+    }
+    
+    
     private func loadShows() {
-        api.popularTVShows()
+        api.shows(with: sorting)
             .done { (listing: Listing<Show>) in
                 self.fetchedShows = listing.results
             }.catch { (error) in
