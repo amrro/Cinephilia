@@ -60,19 +60,27 @@ class ShowDetailsViewController: UIViewController {
     }
     
     private func relaodDetailedShow(with id: Int) {
-        api.show(with: id)
-            .done { (detailedShow) in
-                self.updateUI(using: detailedShow)
-            }.catch { (error) in
-                print(error)
-        }
+        let _ = api.show(with: id)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                    case .finished:
+                    break;
+                case .failure(let error):
+                    print(error)
+                }
+            }) { self.updateUI(using: $0) }
         
-        api.similarShows(with: id)
-            .done { listing in
-                self.similarShowDataSource = listing.results
-            }.catch { (error) in
+        let _ = api.similarShows(with: id)
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { completion in
+            switch completion {
+                case .finished:
+                break;
+            case .failure(let error):
                 print(error)
-        }
+            }
+        }) { self.similarShowDataSource = $0.results }
     }
     
     
