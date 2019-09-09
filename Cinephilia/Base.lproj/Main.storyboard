@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mqV-gl-n1M">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mqV-gl-n1M">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14819.2"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -44,7 +41,7 @@
         <scene sceneID="nd5-1F-clb">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ff2-oC-d3q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="TV Shows" image="tv-icon" id="Esw-5X-Wvv"/>
+                    <tabBarItem key="tabBarItem" title="TV Shows" image="tv" catalog="system" id="Esw-5X-Wvv"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hdc-rR-hDh">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -72,11 +69,11 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ymg-Gf-lcb" id="6Ee-o6-PKs">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="199.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="O09-l8-sgu">
-                                            <rect key="frame" x="20" y="20" width="374" height="159.5"/>
+                                            <rect key="frame" x="20" y="20" width="374" height="160"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="32i-n3-BNT" userLabel="Poster">
                                                     <rect key="frame" x="0.0" y="5" width="115" height="150"/>
@@ -133,7 +130,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="nlZ-4A-6zq">
-                        <barButtonItem key="rightBarButtonItem" title="Sort" image="sorting-icon" id="Ilp-VM-Ow3">
+                        <barButtonItem key="rightBarButtonItem" title="Sort" image="line.horizontal.3.decrease" catalog="system" id="Ilp-VM-Ow3">
                             <connections>
                                 <action selector="updateSorting:" destination="JEV-nr-tcW" id="hnR-9b-MmT"/>
                             </connections>
@@ -147,7 +144,7 @@
             </objects>
             <point key="canvasLocation" x="1924.6376811594205" y="28.794642857142854"/>
         </scene>
-        <!--Show Details View Controller-->
+        <!--Title-->
         <scene sceneID="19X-ka-9fL">
             <objects>
                 <viewController storyboardIdentifier="ShowDetailsViewController" id="9q5-NJ-iAk" customClass="ShowDetailsViewController" customModule="Cinephilia" customModuleProvider="target" sceneMemberID="viewController">
@@ -319,6 +316,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NaW-Hc-toO"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="Hxp-IS-j9x">
+                        <barButtonItem key="rightBarButtonItem" title="Share" image="square.and.arrow.up" catalog="system" id="aRD-J2-NuV"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="showAiringDateLabel" destination="omk-J1-pWk" id="Lqu-VJ-K7p"/>
                         <outlet property="showAverageRating" destination="uGs-Jc-HVa" id="FjO-BV-RU1"/>
@@ -337,7 +337,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="sorting-icon" width="30" height="30"/>
-        <image name="tv-icon" width="30" height="30"/>
+        <image name="line.horizontal.3.decrease" catalog="system" width="64" height="36"/>
+        <image name="square.and.arrow.up" catalog="system" width="56" height="64"/>
+        <image name="tv" catalog="system" width="64" height="46"/>
     </resources>
 </document>
