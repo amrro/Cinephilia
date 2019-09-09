@@ -10,7 +10,7 @@ import UIKit
 
 class ShowDetailsViewController: UIViewController {
 
-    // MARK:- Outlets
+    // MARK: - Outlets
     @IBOutlet weak var showBackdropImage: UIImageView!
     @IBOutlet weak var showAiringDateLabel: UILabel!
     @IBOutlet weak var showTitleLabel: UILabel!

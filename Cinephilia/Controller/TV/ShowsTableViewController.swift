@@ -36,11 +36,6 @@ class ShowsTableViewController: UITableViewController {
         }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        sorting = .popular
-    }
-
     @IBAction func updateSorting(_ sender: Any) {
         let sortingActionSheet = UIAlertController(title: "Select Sorting Type.", message: nil, preferredStyle: .actionSheet)
 
