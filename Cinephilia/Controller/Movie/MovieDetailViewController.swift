@@ -35,6 +35,7 @@ class MovieDetailViewController: UIViewController {
             updateUI(using: movie)
         }
         reloadMovie()
+        setupNavBar()
     }
     
     private func reloadMovie() {
@@ -66,6 +67,13 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
+    
+    private func setupNavBar() {
+        navigationController?.navigationBar.prefersLargeTitles = false
+//        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem.
+        let navBarAppearance = navigationController?.navigationBar.standardAppearance.copy()
+        
+    }
     
     private func updateUI(using newMovie: Movie) {
         navigationItem.largeTitleDisplayMode = .never
