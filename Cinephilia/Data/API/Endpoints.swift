@@ -7,18 +7,16 @@
 //
 import Foundation
 
-fileprivate  let API_KEY = "f5d2da75e7729eee412a43da5f542a9c"
-fileprivate  let BASE_URL = "https://api.themoviedb.org/3"
-fileprivate  let API_KEY_PARM = "?api_key=\(API_KEY)"
+private  let API_KEY = "f5d2da75e7729eee412a43da5f542a9c"
+private  let BASE_URL = "https://api.themoviedb.org/3"
+private  let API_KEY_PARM = "?api_key=\(API_KEY)"
 
 fileprivate func buildURL(including path: String) -> String {
     return BASE_URL + path + API_KEY_PARM
 }
 
-
 enum MovieEndpoints {
 
-    
     case popular
     case topRated
     case upcoming
@@ -28,8 +26,7 @@ enum MovieEndpoints {
     case movieGenres
     case tvGenres
     case search(query: String)
-    
-    
+
     var stringValue: String {
         switch self {
         case .popular:
@@ -52,16 +49,15 @@ enum MovieEndpoints {
             return BASE_URL + "/search/movie" + API_KEY_PARM + "&query=\(query)"
         }
     }
-    
+
     var url: URL {
         return URL(string: stringValue)!
     }
-    
+
 }
 
-
 enum ShowsEndpoints {
-    
+
     case popular
     case topRated
     case upcoming
@@ -69,8 +65,6 @@ enum ShowsEndpoints {
     case show(id: Int)
     case similar(id: Int)
 
-    
-    
     var stringValue: String {
         switch self {
         case .popular:
@@ -88,10 +82,8 @@ enum ShowsEndpoints {
 
         }
     }
-    
-    
+
     var url: URL {
         return URL(string: stringValue)!
     }
 }
-

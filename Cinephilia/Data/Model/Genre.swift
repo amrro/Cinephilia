@@ -58,7 +58,7 @@ struct Genre: Codable, CustomStringConvertible {
             return name
         }
     }
-    
+
     let id: Int
     let name: String
 }

@@ -10,8 +10,7 @@ enum Sorting: String {
     case popular = "Popular"
     case topRated = "Top Rated"
     case coming = "Upcoming"
-    
-    
+
     static var values: [Sorting] {
             return [.popular, .topRated, .coming]
     }

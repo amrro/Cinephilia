@@ -10,20 +10,20 @@ import UIKit
 import Kingfisher
 
 class SimilarElementCell: UICollectionViewCell {
-    
+
     @IBOutlet weak var moviePoster: UIImageView!
-    
-    var posterPath: String?  {
+
+    var posterPath: String? {
         didSet {
             guard let posterPath = posterPath else { return }
             let url = MovieEndpoints.posterImage(path: posterPath).url
             let processor = RoundCornerImageProcessor(cornerRadius: 40)
-            
+
             moviePoster.kf.indicatorType = .activity
             moviePoster.kf.setImage(with: url, options: [.transition(.fade(0.3)), .processor(processor)])
         }
     }
-    
+
 //    var movie: Movie? {
 //        didSet {
 //
