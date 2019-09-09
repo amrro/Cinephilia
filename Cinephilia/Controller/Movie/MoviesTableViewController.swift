@@ -12,13 +12,8 @@ import Combine
 class MoviesTableViewController: UITableViewController {
 
     private let api = MoviesAPI()
-    let searchController = UISearchController(searchResultsController: nil)
 
     private var fetchedMovies = [Movie]() {
-        didSet { currentDataSource = fetchedMovies }
-    }
-
-    private var currentDataSource = [Movie]() {
         didSet { tableView.reloadData() }
     }
 
@@ -29,7 +24,6 @@ class MoviesTableViewController: UITableViewController {
         super.viewDidLoad()
         setupNavBar()
         setupRefreshConroller()
-        setupSearchController()
 
         _ = $sorting
             .receive(on: DispatchQueue.main)
@@ -69,15 +63,6 @@ class MoviesTableViewController: UITableViewController {
         tableView.refreshControl?.addTarget(self, action: #selector(loadMovies), for: .valueChanged)
     }
 
-    fileprivate func setupSearchController() {
-        // Setup the Search Controller
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "Search Movies"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-    }
-
     private func setupNavBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -106,14 +91,14 @@ class MoviesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currentDataSource.count
+        return fetchedMovies.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath)
 
         if let movieCell = cell as? MovieTableViewCell {
-            movieCell.movie = currentDataSource[indexPath.row]
+            movieCell.movie = self.fetchedMovies[indexPath.row]
         }
         return cell
     }
@@ -128,35 +113,9 @@ class MoviesTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showMovieDetail" {
             if let movieDetailVC = segue.destination as? MovieDetailViewController {
-                movieDetailVC.movie = self.currentDataSource[selectedMovieIndex]
+                movieDetailVC.movie = self.fetchedMovies[selectedMovieIndex]
             }
         }
-    }
-
-}
-
-extension MoviesTableViewController: UISearchBarDelegate {
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let query = searchBar.text, !query.isEmpty {
-            _ = self.api.search(query: query)
-                .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { (comletion) in
-                    switch comletion {
-                    case .finished:
-                        break
-                    case .failure(let error):
-                        print(error)
-                    }
-                }) { listing in
-                    self.currentDataSource = listing.results
-                    self.tableView.reloadData()
-            }
-        }
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        currentDataSource = fetchedMovies
     }
 
 }
