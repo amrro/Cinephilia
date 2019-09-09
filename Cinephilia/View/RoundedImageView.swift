@@ -8,35 +8,33 @@
 
 import UIKit
 
-
 @IBDesignable
 class RoundedImageView: UIImageView {
 
-    
     @IBInspectable
     var cornerRradius: CGFloat {
         set { self.layer.cornerRadius = newValue }
         get { return self.layer.cornerRadius }
     }
-    
+
     @IBInspectable
     var shadowRadius: CGFloat {
         get { return self.layer.shadowRadius }
         set { self.layer.shadowRadius = newValue }
     }
-    
+
     @IBInspectable
     var shadowOpacity: Float {
         get { return layer.shadowOpacity }
         set { layer.shadowOpacity = newValue }
     }
-    
+
     @IBInspectable
     var shadowOffset: CGSize {
         get { return self.layer.shadowOffset }
         set { self.layer.shadowOffset = newValue }
     }
-    
+
     @IBInspectable
     var shadowColor: UIColor? {
         get {
@@ -53,7 +51,7 @@ class RoundedImageView: UIImageView {
             }
         }
     }
-    
+
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

@@ -36,7 +36,7 @@ struct Show: Codable {
     let type: String?
     let voteAverage: Double
     let voteCount: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case backdropPath = "backdrop_path"
 //        case createdBy = "created_by"
@@ -70,7 +70,7 @@ struct CreatedBy: Codable {
     let creditID, name: String
     let gender: Int
     let profilePath: String
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case creditID = "credit_id"
@@ -87,7 +87,7 @@ struct TEpisodeToAir: Codable {
     let seasonNumber, showID: Int
     let stillPath: String?
     let voteAverage, voteCount: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case airDate = "air_date"
         case episodeNumber = "episode_number"
@@ -107,7 +107,7 @@ struct Network: Codable {
     let id: Int
     let logoPath: String?
     let originCountry: String
-    
+
     enum CodingKeys: String, CodingKey {
         case name, id
         case logoPath = "logo_path"
@@ -122,7 +122,7 @@ struct Season: Codable {
     let name: String
     let overview, posterPath: String?
     let seasonNumber: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case airDate = "air_date"
         case episodeCount = "episode_count"
@@ -131,8 +131,5 @@ struct Season: Codable {
         case seasonNumber = "season_number"
     }
 }
-
-
-
 
 typealias Shows = Listing<Show>

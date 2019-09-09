@@ -9,8 +9,8 @@
 import UIKit
 
 class ShowDetailsViewController: UIViewController {
-    
-    // Mark:- Outlets
+
+    // MARK:- Outlets
     @IBOutlet weak var showBackdropImage: UIImageView!
     @IBOutlet weak var showAiringDateLabel: UILabel!
     @IBOutlet weak var showTitleLabel: UILabel!
@@ -20,8 +20,7 @@ class ShowDetailsViewController: UIViewController {
     @IBOutlet weak var showAverageRating: UILabel!
     @IBOutlet weak var showOverviewLabel: UILabel!
     @IBOutlet weak var similarCollectionView: UICollectionView!
-    
-    
+
     var show: Show?
     let api = ShowsAPI()
     var similarShowDataSource = [Show]() {
@@ -32,58 +31,56 @@ class ShowDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if let it = show {
             updateUI(using: it)
             relaodDetailedShow(with: it.id)
         }
     }
-    
 
     private func updateUI(using show: Show) {
         navigationItem.title = show.name
         navigationItem.largeTitleDisplayMode = .never
-        
+
         // backdrop image.
         let url = ShowsEndpoints.posterPath(path: show.backdropPath!).url
         showBackdropImage.kf.indicatorType = .activity
         showBackdropImage.kf.setImage(with: url)
-        
+
         // show information.
         showAiringDateLabel.text = show.firstAirDate
         showTitleLabel.text = show.originalName
-        
-        showGenresLabel.text = show.genres?.map{ $0.description }.joined(separator: " | ")
+
+        showGenresLabel.text = show.genres?.map { $0.description }.joined(separator: " | ")
         showSeasonsCountLabel.text = show.seasons?.count.description
         showAverageRating.text = String(show.voteAverage)
         showOverviewLabel.text = show.overview
     }
-    
+
     private func relaodDetailedShow(with id: Int) {
-        let _ = api.show(with: id)
+        _ = api.show(with: id)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
                     case .finished:
-                    break;
+                    break
                 case .failure(let error):
                     print(error)
                 }
             }) { self.updateUI(using: $0) }
-        
-        let _ = api.similarShows(with: id)
+
+        _ = api.similarShows(with: id)
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { completion in
             switch completion {
                 case .finished:
-                break;
+                break
             case .failure(let error):
                 print(error)
             }
         }) { self.similarShowDataSource = $0.results }
     }
-    
-    
+
     private func openSimilarShow(show: Show) {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ShowDetailsViewController") as? ShowDetailsViewController {
             vc.show = show
@@ -93,28 +90,25 @@ class ShowDetailsViewController: UIViewController {
 
 }
 
-
 extension ShowDetailsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         openSimilarShow(show: similarShowDataSource[indexPath.row])
     }
 }
 
-
 extension ShowDetailsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return similarShowDataSource.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RelatedShowPoster", for: indexPath)
-        
+
         if let posterCell = cell as? SimilarElementCell {
             posterCell.posterPath = similarShowDataSource[indexPath.row].posterPath
         }
-        
+
         return cell
     }
-    
-    
+
 }

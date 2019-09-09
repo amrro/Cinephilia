@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 // MARK: - Movie
 struct Movie: Codable {
     let popularity: Double

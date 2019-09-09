@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 class ShowsTableViewController: UITableViewController {
-    
+
     private let api = ShowsAPI()
     private var fetchedShows = [Show]() {
         didSet { tableView.reloadData() }
@@ -18,17 +18,17 @@ class ShowsTableViewController: UITableViewController {
 
     @Published private var sorting: Sorting = .popular
     @Published private var selecedIndex: Int! = nil
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        let _ = $selecedIndex.filter{ $0 != nil }
+
+        _ = $selecedIndex.filter { $0 != nil }
             .receive(on: DispatchQueue.main)
             .print()
             .sink { _ in self.performSegue(withIdentifier: "showDetails", sender: nil) }
-        
-        let _ = $sorting.receive(on: DispatchQueue.main)
+
+        _ = $sorting.receive(on: DispatchQueue.main)
             .removeDuplicates()
             .sink {
                 self.loadShows()
@@ -40,38 +40,36 @@ class ShowsTableViewController: UITableViewController {
         super.viewDidAppear(animated)
         sorting = .popular
     }
-    
+
     @IBAction func updateSorting(_ sender: Any) {
         let sortingActionSheet = UIAlertController(title: "Select Sorting Type.", message: nil, preferredStyle: .actionSheet)
-        
+
         for sortingItem in Sorting.values {
             sortingActionSheet.addAction(
-                UIAlertAction(title: sortingItem.rawValue, style: .default, handler: { [weak self] (UIAlertAction) in
+                UIAlertAction(title: sortingItem.rawValue, style: .default, handler: { [weak self] (_) in
                     if sortingItem != self?.sorting {
                         self?.sorting = sortingItem
                     }
                 }))
         }
-        
+
         sortingActionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
+
         self.present(sortingActionSheet, animated: true, completion: nil)
     }
-    
-    
+
     private func loadShows() {
-        let _ = api.shows(with: sorting)
+        _ = api.shows(with: sorting)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
                     case .finished:
-                    break;
+                    break
                 case .failure(let error):
                     print(error)
                 }
             }) { self.fetchedShows = $0.results }
     }
-
 
     // MARK: - Table view data source
 
@@ -85,20 +83,18 @@ class ShowsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ShowTableViewCell", for: indexPath)
-        
+
         if let showCell = cell as? TVShowTableViewCell {
             showCell.show = self.fetchedShows[indexPath.row]
         }
 
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         selecedIndex = indexPath.row
     }
-
-
 
     // MARK: - Navigation
 
@@ -110,6 +106,5 @@ class ShowsTableViewController: UITableViewController {
             }
         }
     }
-
 
 }

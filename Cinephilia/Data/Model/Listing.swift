@@ -8,11 +8,10 @@
 
 import Foundation
 
-
 struct Listing<T: Codable>: Codable {
     let page, totalResults, totalPages: Int
     let results: [T]
-    
+
     enum CodingKeys: String, CodingKey {
         case page
         case totalResults = "total_results"
