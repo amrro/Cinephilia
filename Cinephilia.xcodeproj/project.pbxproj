@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6D96E71D95A57E64D58FDF2B /* Pods_Cinephilia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F037391863A123EC0DEB2A9 /* Pods_Cinephilia.framework */; };
 		AD0CF698231418E0000217B5 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0CF697231418E0000217B5 /* Endpoints.swift */; };
 		AD0CF69A231426A0000217B5 /* MoviesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0CF699231426A0000217B5 /* MoviesTableViewController.swift */; };
 		AD0CF69C2314270A000217B5 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0CF69B2314270A000217B5 /* MovieTableViewCell.swift */; };
@@ -21,6 +20,7 @@
 		AD950A6D23119F0C00C7A7F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD950A6B23119F0C00C7A7F6 /* LaunchScreen.storyboard */; };
 		AD950A762311A00D00C7A7F6 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD950A752311A00D00C7A7F6 /* Movie.swift */; };
 		AD950A782311A2EF00C7A7F6 /* MoviesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD950A772311A2EF00C7A7F6 /* MoviesAPI.swift */; };
+		AD97BE342326E8A90070F9FD /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = AD97BE332326E8A90070F9FD /* Kingfisher */; };
 		ADAEEEE7231BD43B008023AD /* SimilarElementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAEEEE6231BD43B008023AD /* SimilarElementCell.swift */; };
 		ADAEEEEC231C7EB4008023AD /* Moives.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADAEEEEB231C7EB4008023AD /* Moives.storyboard */; };
 		ADAEEEEE231C8680008023AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADAEEEED231C8680008023AD /* Assets.xcassets */; };
@@ -44,8 +44,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5C9DDDB557960E4FA3C03256 /* Pods-Cinephilia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cinephilia.release.xcconfig"; path = "Target Support Files/Pods-Cinephilia/Pods-Cinephilia.release.xcconfig"; sourceTree = "<group>"; };
-		5F037391863A123EC0DEB2A9 /* Pods_Cinephilia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cinephilia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD0CF697231418E0000217B5 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		AD0CF699231426A0000217B5 /* MoviesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewController.swift; sourceTree = "<group>"; };
 		AD0CF69B2314270A000217B5 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
@@ -74,7 +72,6 @@
 		ADEF1004231EE89500BA8549 /* MoviesViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesViewControllerTest.swift; sourceTree = "<group>"; };
 		ADEF1006231EE89500BA8549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADF69F08231EDC3C00C7CCAD /* _.gitignore_  */ = {isa = PBXFileReference; lastKnownFileType = text; path = "_.gitignore_ "; sourceTree = "<group>"; };
-		F64A1379904CA87B2FB836A3 /* Pods-Cinephilia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cinephilia.debug.xcconfig"; path = "Target Support Files/Pods-Cinephilia/Pods-Cinephilia.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D96E71D95A57E64D58FDF2B /* Pods_Cinephilia.framework in Frameworks */,
+				AD97BE342326E8A90070F9FD /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,23 +93,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3A9B1A6EFC2947CE54E619C6 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5F037391863A123EC0DEB2A9 /* Pods_Cinephilia.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		913A7CD21923B797CBCD73CC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F64A1379904CA87B2FB836A3 /* Pods-Cinephilia.debug.xcconfig */,
-				5C9DDDB557960E4FA3C03256 /* Pods-Cinephilia.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		AD0CF69F23146D33000217B5 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,8 +107,6 @@
 				AD950A6123119F0B00C7A7F6 /* Cinephilia */,
 				ADEF1003231EE89500BA8549 /* MoviesViewControllerTest */,
 				AD950A6023119F0B00C7A7F6 /* Products */,
-				913A7CD21923B797CBCD73CC /* Pods */,
-				3A9B1A6EFC2947CE54E619C6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -244,17 +222,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD950A7123119F0C00C7A7F6 /* Build configuration list for PBXNativeTarget "Cinephilia" */;
 			buildPhases = (
-				0BC06DA742969B35BFACB27C /* [CP] Check Pods Manifest.lock */,
 				AD950A5B23119F0B00C7A7F6 /* Sources */,
 				AD950A5C23119F0B00C7A7F6 /* Frameworks */,
 				AD950A5D23119F0B00C7A7F6 /* Resources */,
-				872FB72AC5760D73C53BC1A0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Cinephilia;
+			packageProductDependencies = (
+				AD97BE332326E8A90070F9FD /* Kingfisher */,
+			);
 			productName = Cinephilia;
 			productReference = AD950A5F23119F0B00C7A7F6 /* Cinephilia.app */;
 			productType = "com.apple.product-type.application";
@@ -305,6 +284,9 @@
 				Base,
 			);
 			mainGroup = AD950A5623119F0B00C7A7F6;
+			packageReferences = (
+				AD97BE322326E8A90070F9FD /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = AD950A6023119F0B00C7A7F6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -336,48 +318,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		0BC06DA742969B35BFACB27C /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Cinephilia-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		872FB72AC5760D73C53BC1A0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Cinephilia/Pods-Cinephilia-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Cinephilia/Pods-Cinephilia-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cinephilia/Pods-Cinephilia-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AD950A5B23119F0B00C7A7F6 /* Sources */ = {
@@ -500,6 +440,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -554,13 +495,13 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		AD950A7223119F0C00C7A7F6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F64A1379904CA87B2FB836A3 /* Pods-Cinephilia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -579,7 +520,6 @@
 		};
 		AD950A7323119F0C00C7A7F6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C9DDDB557960E4FA3C03256 /* Pods-Cinephilia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -665,6 +605,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AD97BE322326E8A90070F9FD /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:onevcat/Kingfisher.git";
+			requirement = {
+				branch = xcode11;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AD97BE332326E8A90070F9FD /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AD97BE322326E8A90070F9FD /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AD950A5723119F0B00C7A7F6 /* Project object */;
 }
