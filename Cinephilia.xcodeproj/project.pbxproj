@@ -21,6 +21,7 @@
 		AD950A762311A00D00C7A7F6 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD950A752311A00D00C7A7F6 /* Movie.swift */; };
 		AD950A782311A2EF00C7A7F6 /* MoviesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD950A772311A2EF00C7A7F6 /* MoviesAPI.swift */; };
 		AD97BE342326E8A90070F9FD /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = AD97BE332326E8A90070F9FD /* Kingfisher */; };
+		AD97BE372326F9460070F9FD /* Shows.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD97BE352326F9460070F9FD /* Shows.storyboard */; };
 		ADAEEEE7231BD43B008023AD /* SimilarElementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAEEEE6231BD43B008023AD /* SimilarElementCell.swift */; };
 		ADAEEEEC231C7EB4008023AD /* Moives.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADAEEEEB231C7EB4008023AD /* Moives.storyboard */; };
 		ADAEEEEE231C8680008023AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADAEEEED231C8680008023AD /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		AD950A6E23119F0C00C7A7F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD950A752311A00D00C7A7F6 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		AD950A772311A2EF00C7A7F6 /* MoviesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesAPI.swift; sourceTree = "<group>"; };
+		AD97BE362326F9460070F9FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Cinephilia/Base.lproj/Shows.storyboard; sourceTree = "<group>"; };
 		ADAEEEE6231BD43B008023AD /* SimilarElementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarElementCell.swift; sourceTree = "<group>"; };
 		ADAEEEEB231C7EB4008023AD /* Moives.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Moives.storyboard; sourceTree = "<group>"; };
 		ADAEEEED231C8680008023AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				AD0CF69F23146D33000217B5 /* View */,
 				AD950A6623119F0B00C7A7F6 /* Main.storyboard */,
 				ADAEEEEB231C7EB4008023AD /* Moives.storyboard */,
+				AD97BE352326F9460070F9FD /* Shows.storyboard */,
 				AD950A6E23119F0C00C7A7F6 /* Info.plist */,
 				AD1C4D7B231E0DD0001C9B02 /* README.md */,
 				ADF69F08231EDC3C00C7CCAD /* _.gitignore_  */,
@@ -305,6 +308,7 @@
 				AD950A6D23119F0C00C7A7F6 /* LaunchScreen.storyboard in Resources */,
 				ADF69F09231EDC3C00C7CCAD /* _.gitignore_  in Resources */,
 				AD950A6823119F0B00C7A7F6 /* Main.storyboard in Resources */,
+				AD97BE372326F9460070F9FD /* Shows.storyboard in Resources */,
 				ADAEEEEE231C8680008023AD /* Assets.xcassets in Resources */,
 				ADAEEEEC231C7EB4008023AD /* Moives.storyboard in Resources */,
 			);
@@ -377,6 +381,14 @@
 				AD950A6C23119F0C00C7A7F6 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		AD97BE352326F9460070F9FD /* Shows.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AD97BE362326F9460070F9FD /* Base */,
+			);
+			name = Shows.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
