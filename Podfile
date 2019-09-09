@@ -7,5 +7,4 @@ target 'Cinephilia' do
 
   # Pods for Cinephilia
   pod 'Kingfisher', '~> 5.0'
-  pod 'PromiseKit/Foundation'
 end
