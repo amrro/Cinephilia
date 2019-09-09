@@ -28,14 +28,14 @@ class MoviesViewControllerTest: XCTestCase {
 
     func testExample() {
         let app = XCUIApplication()
-        
+
         let moviesTabItem = app.tabBars.buttons["Movies"]
         XCTAssertTrue(moviesTabItem.isEnabled)
     }
-    
+
     func testRefreshControllingIsDisplayed() {
         let app = XCUIApplication()
-                        
+
     }
 
 }

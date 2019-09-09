@@ -46,11 +46,6 @@ class MoviesTableViewController: UITableViewController {
             .sink { _ in self.performSegue(withIdentifier: "showMovieDetail", sender: nil) }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        sorting = .popular
-    }
-
     @IBAction func sortMovies(_ sender: Any) {
         let sortingActionSheet = UIAlertController(title: "Select Sorting Type", message: nil, preferredStyle: .actionSheet)
 
