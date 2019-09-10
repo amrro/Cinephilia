@@ -13,6 +13,10 @@ import Combine
 class MoviesAPI {
 
     class func request<T: Decodable>(with url: URL, type: T.Type) -> AnyPublisher<T, Error> {
+        
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+
         return URLSession.shared.dataTaskPublisher(for: url)
             .print()
             .tryMap { output in
@@ -20,7 +24,7 @@ class MoviesAPI {
                     throw HTTPError.statusCode
                 }
                 return output.data
-        } .decode(type: type.self, decoder: JSONDecoder())
+        } .decode(type: type.self, decoder: decoder)
             .eraseToAnyPublisher()
     }
 
