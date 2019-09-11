@@ -55,6 +55,7 @@ class SearchViewController: UIViewController {
 
     private func setupSearchController() {
         searchController = UISearchController(searchResultsController: nil)
+        searchController?.becomeFirstResponder()
         searchController?.searchBar.delegate = self
         navigationController?.navigationItem.searchController = searchController
         searchController?.obscuresBackgroundDuringPresentation = false
