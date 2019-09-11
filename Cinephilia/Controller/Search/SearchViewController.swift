@@ -16,30 +16,26 @@ class SearchViewController: UIViewController {
     var trending: Trending? {
         didSet { trendingTableView.reloadData() }
     }
-    @Published var selectedItemIndex: Int?
+
     @IBOutlet weak var trendingTableView: UITableView!
+    @IBOutlet weak var trendingTypeSegmentedControl: UISegmentedControl!
+    
+    @Published var selectedItemIndex: Int?
+    @Published var selectedMediaType: DiscoverAPI.MediaType = .all
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
-
-        _ = api.trending()
+        
+        _ = $selectedMediaType
             .receive(on: DispatchQueue.main)
-            .print()
-            .sink(receiveCompletion: { (completion) in
-                switch completion {
-
-                case .finished:
-                    break
-                case .failure(let error):
-                    print(error)
-                }
-            }) { self.trending = $0 }
+            .sink { self.loadTrendingTitles(type: $0) }
+        
 
         _ = $selectedItemIndex
             .filter { $0 != nil }
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in }) { selectedIndex in
+            .sink { selectedIndex in
                 if let mediaItem = self.trending?.results[selectedIndex!] {
                     switch mediaItem {
                     case .movie:
@@ -52,14 +48,46 @@ class SearchViewController: UIViewController {
                 }
         }
     }
+    
+    @IBAction func segmentedControllChanged(_ sender: Any) {
+        switch trendingTypeSegmentedControl.selectedSegmentIndex {
+        case 0:
+            selectedMediaType = .all
+            searchController?.searchBar.placeholder = "Search Movies and Shows"
+        case 1:
+            selectedMediaType = .movie
+            searchController?.searchBar.placeholder = "Search Movies"
+        case 2:
+            selectedMediaType = .tv
+            searchController?.searchBar.placeholder = "Search Movies"
+        default:
+            print("Error happen: segmentedControllChanged(_): Selected selectedSegmentIndex is out of range")
+        }
+    }
+    
+    
+    private func loadTrendingTitles(type: DiscoverAPI.MediaType) {
+        _ = api.trending(type: type)
+            .receive(on: DispatchQueue.main)
+            .print()
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
 
+                case .finished:
+                    break
+                case .failure(let error):
+                    print(error)
+                }
+            }) { self.trending = $0 }
+    }
+    
     private func setupSearchController() {
         searchController = UISearchController(searchResultsController: nil)
         searchController?.becomeFirstResponder()
         searchController?.searchBar.delegate = self
         navigationController?.navigationItem.searchController = searchController
         searchController?.obscuresBackgroundDuringPresentation = false
-        searchController?.searchBar.placeholder = "Search Movies, shows..."
+        searchController?.searchBar.placeholder = "Search Movies and Shows"
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }
@@ -109,7 +137,14 @@ extension SearchViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Trending"
+        switch selectedMediaType {
+        case .all:
+            return "Trending"
+        case .movie:
+            return "Trending Movies"
+        case .tv:
+            return "Trending Shows"
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -102,10 +102,14 @@
                                 <segment title="" image="film" catalog="system"/>
                                 <segment title="" image="tv" catalog="system"/>
                             </segments>
+                            <connections>
+                                <action selector="segmentedControllChanged:" destination="pwk-4w-9ej" eventType="valueChanged" id="Gfx-Ze-din"/>
+                            </connections>
                         </segmentedControl>
                     </navigationItem>
                     <connections>
                         <outlet property="trendingTableView" destination="kqD-3u-hcJ" id="hQR-uB-3uX"/>
+                        <outlet property="trendingTypeSegmentedControl" destination="fUN-p7-Dco" id="z3d-Kw-zaS"/>
                         <segue destination="DwN-0F-5ix" kind="show" identifier="openMovieDetails" id="dYm-e8-QKb"/>
                         <segue destination="aEc-mC-5sA" kind="show" identifier="openShowDetails" id="Tvj-g0-YVp"/>
                     </connections>
