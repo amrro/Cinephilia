@@ -13,7 +13,7 @@ import Combine
 class MoviesAPI {
 
     class func request<T: Decodable>(with url: URL, type: T.Type) -> AnyPublisher<T, Error> {
-        
+
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
 
