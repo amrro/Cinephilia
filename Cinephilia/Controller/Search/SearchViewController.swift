@@ -19,18 +19,17 @@ class SearchViewController: UIViewController {
 
     @IBOutlet weak var trendingTableView: UITableView!
     @IBOutlet weak var trendingTypeSegmentedControl: UISegmentedControl!
-    
+
     @Published var selectedItemIndex: Int?
     @Published var selectedMediaType: DiscoverAPI.MediaType = .all
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
-        
+
         _ = $selectedMediaType
             .receive(on: DispatchQueue.main)
             .sink { self.loadTrendingTitles(type: $0) }
-        
 
         _ = $selectedItemIndex
             .filter { $0 != nil }
@@ -48,7 +47,7 @@ class SearchViewController: UIViewController {
                 }
         }
     }
-    
+
     @IBAction func segmentedControllChanged(_ sender: Any) {
         switch trendingTypeSegmentedControl.selectedSegmentIndex {
         case 0:
@@ -64,8 +63,7 @@ class SearchViewController: UIViewController {
             print("Error happen: segmentedControllChanged(_): Selected selectedSegmentIndex is out of range")
         }
     }
-    
-    
+
     private func loadTrendingTitles(type: DiscoverAPI.MediaType) {
         _ = api.trending(type: type)
             .receive(on: DispatchQueue.main)
@@ -80,7 +78,7 @@ class SearchViewController: UIViewController {
                 }
             }) { self.trending = $0 }
     }
-    
+
     private func setupSearchController() {
         searchController = UISearchController(searchResultsController: nil)
         searchController?.becomeFirstResponder()
@@ -93,8 +91,6 @@ class SearchViewController: UIViewController {
     }
 
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openMovieDetails", let movieDetailVC = segue.destination as? MovieDetailViewController {
             if let mediaItem = self.trending?.results[selectedItemIndex!] {
