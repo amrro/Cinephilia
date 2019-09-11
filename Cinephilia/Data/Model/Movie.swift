@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Movie
-struct Movie: Codable {
+struct Movie: Codable, MediaItem {
     let id: Int
     let mediaType: String?
     let popularity: Double

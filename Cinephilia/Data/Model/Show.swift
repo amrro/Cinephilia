@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Show: Codable {
+struct Show: MediaItem, Codable {
     let id: Int
     let mediaType: String?
     let backdropPath: String?

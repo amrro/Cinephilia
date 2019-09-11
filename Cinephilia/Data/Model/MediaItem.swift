@@ -12,3 +12,9 @@ protocol MediaItem {
     var id: Int { get }
     var mediaType: String? { get }
 }
+
+enum Media {
+    case movie(item: Movie)
+    case tv(item: Show)
+    case undefined
+}
